@@ -1,3 +1,10 @@
+#+title: ADARD run
+#+prompt_id: research.adard
+#+description: Run analyze, design, adversarial review, resolve, develop, and verify with bounded RAGE escalation.
+#+filetags: :research:design:adard:rage:verification:
+#+prompt_aliases: adard | run adard | design review
+
+* Prompt
 Run ADARD against {{TARGET}} for this objective:
 {{OBJECTIVE}}
 

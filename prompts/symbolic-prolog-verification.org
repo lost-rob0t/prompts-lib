@@ -1,3 +1,10 @@
+#+title: Prolog verification gate
+#+prompt_id: symbolic.prolog-verification
+#+description: Materialize evidence as facts and require a real Prolog query to verify the task.
+#+filetags: :prolog:verification:symbolic:testing:
+#+prompt_aliases: verify with prolog | prolog gate
+
+* Prompt
 Verify {{TASK}} using the repository's Prolog verification path.
 
 Requirements:

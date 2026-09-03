@@ -1,3 +1,10 @@
+#+title: Compile coding-agent handoff
+#+prompt_id: engineering.compile-handoff
+#+description: Compress current project context into a self-contained implementation prompt for a fresh agent.
+#+filetags: :engineering:agents:handoff:context:
+#+prompt_aliases: compile prompt | handoff prompt | agent prompt
+
+* Prompt
 Compile the current work into a prompt for a fresh coding agent.
 
 Target repository: {{REPO}}

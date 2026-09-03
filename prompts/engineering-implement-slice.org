@@ -1,3 +1,10 @@
+#+title: Implement bounded slice
+#+prompt_id: engineering.implement-slice
+#+description: Inspect first, implement a bounded task, verify exact head, and avoid unapproved merges.
+#+filetags: :engineering:implementation:tdd:git:
+#+prompt_aliases: implement | coding task | bounded slice
+
+* Prompt
 Work in {{REPO}}.
 
 Implement this bounded task:

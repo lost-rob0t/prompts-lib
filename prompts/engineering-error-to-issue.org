@@ -1,3 +1,10 @@
+#+title: Error to focused issue
+#+prompt_id: engineering.error-to-issue
+#+description: Investigate a failure and turn it into a bounded issue with evidence and regression criteria.
+#+filetags: :engineering:debugging:issues:triage:
+#+prompt_aliases: make issue | bug issue | inspect error
+
+* Prompt
 Inspect this failure in {{REPO}}:
 
 {{ERROR}}

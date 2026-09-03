@@ -1,3 +1,10 @@
+#+title: Repository status only
+#+prompt_id: engineering.repo-status
+#+description: Inspect verified repository state without starting implementation.
+#+filetags: :engineering:status:git:triage:
+#+prompt_aliases: status | what next | repo status
+
+* Prompt
 Inspect {{REPO}} and give me the current engineering status only. Do not modify files, create branches, merge, or start implementation.
 
 Check the current branch/head, recent relevant commits, open PRs/issues, test/CI state, known blockers, and the nearest unfinished core task.

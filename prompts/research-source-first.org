@@ -1,3 +1,10 @@
+#+title: Source-first research
+#+prompt_id: research.source-first
+#+description: Prioritize exact primary evidence and separate facts, inference, and unresolved uncertainty.
+#+filetags: :research:sources:evidence:osint:
+#+prompt_aliases: research | deep research | source first
+
+* Prompt
 Research {{QUESTION}} using source-first evidence.
 
 Prioritize authoritative primary material: current source code, exact commits, PRs/issues, official docs/specifications, papers, datasets, and direct implementation evidence. Use secondary commentary only to fill context or expose disagreement.

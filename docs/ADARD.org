@@ -3,71 +3,71 @@
 
 * Analyze
 
-The repository began empty.  Dotfiles already had a working =.prompt= renderer,
-={{FIELD|default}}= substitution, preview/copy/insert/edit/new commands, and an
-image workflow that reads the same prompt files.  The missing layer was durable
-cross-client ownership, metadata/search, and a better Emacs library surface.
+The repository began empty.  Dotfiles already had reusable prompt rendering and
+Emacs LLM integration.  The missing layer was durable cross-client ownership,
+metadata/search, and a better Emacs library surface.
 
-The recurring user prompt families are bounded implementation, repository
-status/triage, failure-to-issue, docs/runtime synchronization, PR review,
-coding-agent handoff, human-gated execution, Prolog verification, ADARD,
-source-first research, and concise de-slop rewriting.
+The first JSON-catalog design worked mechanically but duplicated metadata away
+from the prompt and was not idiomatic for an Emacs/Org-centered workflow.
 
 * Design
 
-- =prompts-lib= owns reusable prompt text.
-- Prompt bodies stay raw =.prompt= files.
-- =catalog.json= uses =prompts-lib.catalog.v1= for stable IDs, titles,
-  descriptions, tags, aliases, and relative paths.
+- =prompts-lib= owns reusable prompt content.
+- Org files are the default and canonical prompt/config format.
+- Metadata is colocated with the prompt through Org keywords and =#+filetags:=.
+- The renderable body lives below a top-level =* Prompt= heading.
 - Placeholder syntax stays ={{NAME}}= / ={{NAME|default}}=.
-- Clients may discover uncataloged =.prompt= files so metadata is not required
-  to draft a new prompt.
-- Dotfiles owns the Emacs client, not copies of catalog prompt bodies.
+- Markdown and declarative Lisp are alternate adapters into the same logical
+  prompt record; they are not alternate sources of truth for the same prompt.
+- New prompts created by Emacs default to =.org= and open in =org-mode=.
+- The library is discovered from files.  There is no required central catalog.
 
 * Adversarial review
 
 Rejected designs:
 
-- YAML/TOML front matter inside every prompt: adds parser/dependency and leaks
-  client metadata into prompt content.
-- Emacs Lisp as the prompt database: makes Emacs authoritative and blocks other
-  clients.
-- Automatic network sync on every prompt action: introduces surprising external
-  effects and couples rendering to Git/network availability.
-- A prompt daemon/database: unnecessary state and another authority surface for
-  a version-controlled text library.
-- Mandatory catalog updates for every new prompt: makes quick capture brittle.
+- JSON catalog plus separate prompt bodies: duplicates metadata and makes Org a
+  second-class editor rather than the native data model.
+- Emacs Lisp as the only prompt database: blocks non-Emacs clients.
+- YAML/TOML as mandatory metadata: unnecessary parser/dependency for the
+  default workflow.
+- Automatic Git/network synchronization on prompt access: surprising external
+  effects and unrelated to rendering.
+- Prompt daemon/database: unnecessary mutable authority for version-controlled
+  text.
 
 Required defenses:
 
-- Catalog paths must remain inside the library root.
+- File discovery stays under the configured library root.
+- Parsing must not evaluate arbitrary Lisp just to read declarative prompt
+  records.
 - Rendering remains local and deterministic before an explicit send action.
-- Git merge/publish is not an implicit prompt-library operation.
+- Git merge/publish is never implicit.
 
 * Resolve
 
-APPROVE the small file-backed design.
+APPROVE the Org-first file-native design.
 
-The repository catalog is the durable cross-client contract.  The first Emacs
-client reuses the existing renderer, activates an external checkout when
-present, falls back to bundled templates, provides completion/tabulated-list
-browsing, and exposes explicit preview/copy/insert/edit/send actions.
+Org owns the default authoring experience.  Markdown and Lisp exist as format
+adapters for portability and programmable configuration, while all clients see
+the same logical prompt fields.
 
 * Develop
 
-The initial prompt catalog and the dotfiles =prompt-lib.el= client are developed
-on review branches.  No PR is merged by this ADARD artifact.
+The initial reusable prompts are stored as individual Org files.  The Emacs
+client is being updated to discover and parse Org by default and support
+Markdown/Lisp adapters.  No PR is merged by this artifact.
 
 * Verify
 
-Verification requirements for v0:
+Required v0 verification:
 
-- JSON catalog parses as =prompts-lib.catalog.v1=.
-- Catalog paths cannot escape the repository root.
-- Uncataloged prompt files remain discoverable.
-- Existing placeholder rendering stays compatible.
-- External =prompts/= becomes the active existing prompt directory when present.
-- Emacs UI code remains client-side; prompt bodies remain in =prompts-lib=.
+- Org metadata and =* Prompt= bodies parse deterministically.
+- Default creation produces an Org file and opens it in Org mode.
+- Discovery is confined to the configured library root.
+- Markdown and Lisp adapters normalize into the same record shape.
+- Existing ={{...}}= rendering remains compatible.
+- The StarIntel visual prompt remains available after external-library
+  activation.
 
-Full ERT execution requires the user's Emacs environment because the remote
-execution environment used to prepare this branch does not contain Emacs.
+Full ERT execution remains a local Emacs gate before merge.

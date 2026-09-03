@@ -1,46 +1,54 @@
 #+title: prompts-lib
-#+description: Versioned reusable prompt library shared by Emacs and other LLM clients.
+#+description: Org-first reusable prompt library shared by Emacs and other LLM clients.
 
 * Purpose
 
 This repository is the durable source of truth for reusable user prompts.
 Clients render and execute prompts; they do not own prompt content.
 
-Prompt bodies live in =prompts/*.prompt=.  =catalog.json= adds stable IDs,
-titles, descriptions, tags, and aliases without putting client-specific
-metadata into the prompt text itself.
+The library is deliberately file-native.  There is no JSON catalog or prompt
+database.  Metadata and prompt text live together in files that remain useful
+outside any client.
 
-Field syntax is deliberately small:
+* Formats
+
+Org is the default and canonical format.
+
+A normal prompt looks like:
+
+#+begin_src org
+#+title: Implement bounded slice
+#+prompt_id: engineering.implement-slice
+#+description: Inspect first, implement narrowly, verify exact head.
+#+filetags: :engineering:implementation:tdd:git:
+#+prompt_aliases: implement | coding task | bounded slice
+
+* Prompt
+Work in {{REPO}}.
+...
+#+end_src
+
+Prompt fields use:
 
 - ={{NAME}}= — required value
 - ={{NAME|default value}}= — value with a default
 
-* Initial catalog
+Clients should also support Markdown and declarative Lisp records when useful,
+but new prompts default to Org.  Format adapters must project into the same
+logical record: ID, title, description, tags, aliases, and prompt body.
 
-The v0 catalog captures the prompt families used repeatedly across engineering,
-research, symbolic verification, and writing workflows:
+* Initial prompts
 
-- bounded implementation;
-- repository status/triage;
-- failure to focused issue;
-- docs/runtime synchronization;
-- independent PR review;
-- coding-agent handoff compilation;
-- human-gated worker execution;
-- Prolog verification;
-- ADARD;
-- source-first research;
-- concise de-slop rewriting.
+The initial Org library captures recurring engineering, research, symbolic
+verification, writing, and StarIntel visual workflows.  Files are individually
+addressable and can be linked from other Org documents with normal =file:=
+links.
 
-The existing =starintel-visual.prompt= is also mirrored into this repository so
-activating the external library does not remove the current image-template
-workflow.  The dotfiles copy remains the offline fallback.
-
-See =docs/ADARD.org= for the architecture decision and rejected alternatives.
+See =docs/ADARD.org= for the architecture decision.
 
 * Emacs
 
-The initial Emacs client lives in the dotfiles repository under
+The Emacs client lives in the dotfiles repository under
 =lisp/llm/prompt-lib.el=.
 
 Its default checkout path is:
@@ -49,10 +57,9 @@ Its default checkout path is:
 ~/Documents/Projects/prompts-lib
 #+end_example
 
-Override that with =PROMPTS_LIB_DIR= when needed.  Once the checkout exists,
-=SPC y p= opens the full prompt-library Transient through the dotfiles client.
-The same prompts can be browsed, previewed, copied, inserted, edited, or sent
-directly through gptel.
+Override that with =PROMPTS_LIB_DIR=.  Once the checkout exists, =SPC y p=
+opens the prompt-library Transient.  Prompts can be browsed, previewed, copied,
+inserted, edited, or sent through gptel.
 
-The repository remains client-neutral: adding another client should consume the
-same catalog and prompt bodies rather than introducing a second prompt store.
+New prompts should open in Org mode by default.  Markdown and Lisp are explicit
+alternate formats rather than separate libraries.

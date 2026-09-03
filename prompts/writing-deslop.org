@@ -1,3 +1,10 @@
+#+title: De-slop rewrite
+#+prompt_id: writing.deslop
+#+description: Rewrite technical prose directly while preserving constraints and exact names.
+#+filetags: :writing:rewrite:concise:deslop:
+#+prompt_aliases: deslop | rewrite in my style | make concise
+
+* Prompt
 Rewrite the following text to be concise, technical, and natural:
 
 {{TEXT}}

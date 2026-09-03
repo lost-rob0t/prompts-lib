@@ -1,3 +1,10 @@
+#+title: StarIntel visual system
+#+prompt_id: design.starintel-visual
+#+description: Reusable black-and-gold StarIntel technical infographic design prompt migrated from dotfiles.
+#+filetags: :design:image:starintel:infographic:
+#+prompt_aliases: starintel visual | starintel image | black gold infographic
+
+* Prompt
 Create a polished technical product infographic using the following visual system.
 
 STYLE / BRAND
