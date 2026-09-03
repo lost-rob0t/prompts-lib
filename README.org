@@ -15,5 +15,40 @@ Field syntax is deliberately small:
 - ={{NAME}}= — required value
 - ={{NAME|default value}}= — value with a default
 
+* Initial catalog
+
+The v0 catalog captures the prompt families used repeatedly across engineering,
+research, symbolic verification, and writing workflows:
+
+- bounded implementation;
+- repository status/triage;
+- failure to focused issue;
+- docs/runtime synchronization;
+- independent PR review;
+- coding-agent handoff compilation;
+- human-gated worker execution;
+- Prolog verification;
+- ADARD;
+- source-first research;
+- concise de-slop rewriting.
+
+See =docs/ADARD.org= for the architecture decision and rejected alternatives.
+
+* Emacs
+
 The initial Emacs client lives in the dotfiles repository under
-=lisp/llm/prompt-lib.*=.
+=lisp/llm/prompt-lib.el=.
+
+Its default checkout path is:
+
+#+begin_example
+~/Documents/Projects/prompts-lib
+#+end_example
+
+Override that with =PROMPTS_LIB_DIR= when needed.  Once the checkout exists,
+=SPC y p= opens the full prompt-library Transient through the dotfiles client.
+The same prompts can be browsed, previewed, copied, inserted, edited, or sent
+directly through gptel.
+
+The repository remains client-neutral: adding another client should consume the
+same catalog and prompt bodies rather than introducing a second prompt store.
