@@ -1,0 +1,12 @@
+Research {{QUESTION}} using source-first evidence.
+
+Prioritize authoritative primary material: current source code, exact commits, PRs/issues, official docs/specifications, papers, datasets, and direct implementation evidence. Use secondary commentary only to fill context or expose disagreement.
+
+For every important conclusion, separate:
+- directly verified fact;
+- strong inference;
+- unresolved uncertainty.
+
+Prefer exact versions/dates/commit identities over generic descriptions. Do not smooth over contradictions between docs and runtime/source.
+
+Return the answer, the strongest evidence, meaningful counterevidence, remaining gaps, and the next research action only if it materially changes the decision.
