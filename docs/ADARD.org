@@ -1,0 +1,73 @@
+#+title: prompts-lib v0 ADARD
+#+status: RESOLVED-DEVELOPED
+
+* Analyze
+
+The repository began empty.  Dotfiles already had a working =.prompt= renderer,
+={{FIELD|default}}= substitution, preview/copy/insert/edit/new commands, and an
+image workflow that reads the same prompt files.  The missing layer was durable
+cross-client ownership, metadata/search, and a better Emacs library surface.
+
+The recurring user prompt families are bounded implementation, repository
+status/triage, failure-to-issue, docs/runtime synchronization, PR review,
+coding-agent handoff, human-gated execution, Prolog verification, ADARD,
+source-first research, and concise de-slop rewriting.
+
+* Design
+
+- =prompts-lib= owns reusable prompt text.
+- Prompt bodies stay raw =.prompt= files.
+- =catalog.json= uses =prompts-lib.catalog.v1= for stable IDs, titles,
+  descriptions, tags, aliases, and relative paths.
+- Placeholder syntax stays ={{NAME}}= / ={{NAME|default}}=.
+- Clients may discover uncataloged =.prompt= files so metadata is not required
+  to draft a new prompt.
+- Dotfiles owns the Emacs client, not copies of catalog prompt bodies.
+
+* Adversarial review
+
+Rejected designs:
+
+- YAML/TOML front matter inside every prompt: adds parser/dependency and leaks
+  client metadata into prompt content.
+- Emacs Lisp as the prompt database: makes Emacs authoritative and blocks other
+  clients.
+- Automatic network sync on every prompt action: introduces surprising external
+  effects and couples rendering to Git/network availability.
+- A prompt daemon/database: unnecessary state and another authority surface for
+  a version-controlled text library.
+- Mandatory catalog updates for every new prompt: makes quick capture brittle.
+
+Required defenses:
+
+- Catalog paths must remain inside the library root.
+- Rendering remains local and deterministic before an explicit send action.
+- Git merge/publish is not an implicit prompt-library operation.
+
+* Resolve
+
+APPROVE the small file-backed design.
+
+The repository catalog is the durable cross-client contract.  The first Emacs
+client reuses the existing renderer, activates an external checkout when
+present, falls back to bundled templates, provides completion/tabulated-list
+browsing, and exposes explicit preview/copy/insert/edit/send actions.
+
+* Develop
+
+The initial prompt catalog and the dotfiles =prompt-lib.el= client are developed
+on review branches.  No PR is merged by this ADARD artifact.
+
+* Verify
+
+Verification requirements for v0:
+
+- JSON catalog parses as =prompts-lib.catalog.v1=.
+- Catalog paths cannot escape the repository root.
+- Uncataloged prompt files remain discoverable.
+- Existing placeholder rendering stays compatible.
+- External =prompts/= becomes the active existing prompt directory when present.
+- Emacs UI code remains client-side; prompt bodies remain in =prompts-lib=.
+
+Full ERT execution requires the user's Emacs environment because the remote
+execution environment used to prepare this branch does not contain Emacs.
