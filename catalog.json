@@ -1,0 +1,93 @@
+{
+  "schema": "prompts-lib.catalog.v1",
+  "prompts": [
+    {
+      "id": "engineering.implement-slice",
+      "title": "Implement bounded slice",
+      "description": "Inspect first, implement a bounded task, verify exact head, and avoid unapproved merges.",
+      "path": "prompts/engineering-implement-slice.prompt",
+      "tags": ["engineering", "implementation", "tdd", "git"],
+      "aliases": ["implement", "coding task", "bounded slice"]
+    },
+    {
+      "id": "engineering.repo-status",
+      "title": "Repository status only",
+      "description": "Inspect verified repository state without starting implementation.",
+      "path": "prompts/engineering-repo-status.prompt",
+      "tags": ["engineering", "status", "git", "triage"],
+      "aliases": ["status", "what next", "repo status"]
+    },
+    {
+      "id": "engineering.error-to-issue",
+      "title": "Error to focused issue",
+      "description": "Investigate a failure and turn it into a bounded issue with evidence and regression criteria.",
+      "path": "prompts/engineering-error-to-issue.prompt",
+      "tags": ["engineering", "debugging", "issues", "triage"],
+      "aliases": ["make issue", "bug issue", "inspect error"]
+    },
+    {
+      "id": "engineering.docs-runtime-sync",
+      "title": "Sync docs to runtime",
+      "description": "Find stale documentation by comparing it against executable source and verified runtime behavior.",
+      "path": "prompts/engineering-docs-runtime-sync.prompt",
+      "tags": ["engineering", "docs", "runtime", "literate"],
+      "aliases": ["update docs", "stale docs", "docs vs source"]
+    },
+    {
+      "id": "engineering.pr-review",
+      "title": "Independent PR review",
+      "description": "Review a complete PR against source, tests, repository rules, and exact-head evidence.",
+      "path": "prompts/engineering-pr-review.prompt",
+      "tags": ["engineering", "review", "pull-request", "verification"],
+      "aliases": ["review pr", "check pr"]
+    },
+    {
+      "id": "engineering.compile-handoff",
+      "title": "Compile coding-agent handoff",
+      "description": "Compress current project context into a self-contained implementation prompt for a fresh agent.",
+      "path": "prompts/engineering-compile-handoff.prompt",
+      "tags": ["engineering", "agents", "handoff", "context"],
+      "aliases": ["compile prompt", "handoff prompt", "agent prompt"]
+    },
+    {
+      "id": "engineering.human-gated-worker",
+      "title": "Human-gated worker",
+      "description": "Allow research and bounded branch work while gating merges, deploys, and other consequential effects.",
+      "path": "prompts/engineering-human-gated-worker.prompt",
+      "tags": ["engineering", "agents", "approval", "safety"],
+      "aliases": ["human gated", "do not merge", "approval gate"]
+    },
+    {
+      "id": "symbolic.prolog-verification",
+      "title": "Prolog verification gate",
+      "description": "Materialize evidence as facts and require a real Prolog query to verify the task.",
+      "path": "prompts/symbolic-prolog-verification.prompt",
+      "tags": ["prolog", "verification", "symbolic", "testing"],
+      "aliases": ["verify with prolog", "prolog gate"]
+    },
+    {
+      "id": "research.adard",
+      "title": "ADARD run",
+      "description": "Run analyze, design, adversarial review, resolve, develop, and verify with bounded RAGE escalation.",
+      "path": "prompts/research-adard.prompt",
+      "tags": ["research", "design", "adard", "rage", "verification"],
+      "aliases": ["adard", "run adard", "design review"]
+    },
+    {
+      "id": "research.source-first",
+      "title": "Source-first research",
+      "description": "Prioritize exact primary evidence and separate facts, inference, and unresolved uncertainty.",
+      "path": "prompts/research-source-first.prompt",
+      "tags": ["research", "sources", "evidence", "osint"],
+      "aliases": ["research", "deep research", "source first"]
+    },
+    {
+      "id": "writing.deslop",
+      "title": "De-slop rewrite",
+      "description": "Rewrite technical prose directly while preserving constraints and exact names.",
+      "path": "prompts/writing-deslop.prompt",
+      "tags": ["writing", "rewrite", "concise", "deslop"],
+      "aliases": ["deslop", "rewrite in my style", "make concise"]
+    }
+  ]
+}
