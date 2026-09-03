@@ -1,0 +1,12 @@
+Verify {{TASK}} using the repository's Prolog verification path.
+
+Requirements:
+- Inspect the relevant specification, implementation, tests, and existing Prolog facts/rules.
+- Materialize the required facts from real on-disk evidence; do not encode the desired answer as a fact.
+- Write or update the verification query/rule so the result is mechanically checkable.
+- Run the query and the relevant normal test suite.
+- A Prolog result of false means the task is not verified. Do not replace a failed symbolic gate with a prose claim.
+- Preserve the repository's existing authority boundaries and fact schema.
+{{EXTRA_INVARIANTS|}}
+
+Return the exact query, result, supporting test evidence, and any unsatisfied predicate/invariant.
