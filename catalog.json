@@ -88,6 +88,14 @@
       "path": "prompts/writing-deslop.prompt",
       "tags": ["writing", "rewrite", "concise", "deslop"],
       "aliases": ["deslop", "rewrite in my style", "make concise"]
+    },
+    {
+      "id": "design.starintel-visual",
+      "title": "StarIntel visual system",
+      "description": "Reusable black-and-gold StarIntel technical infographic design prompt migrated from dotfiles.",
+      "path": "prompts/starintel-visual.prompt",
+      "tags": ["design", "image", "starintel", "infographic"],
+      "aliases": ["starintel visual", "starintel image", "black gold infographic"]
     }
   ]
 }
