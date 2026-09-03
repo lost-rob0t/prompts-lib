@@ -32,6 +32,10 @@ research, symbolic verification, and writing workflows:
 - source-first research;
 - concise de-slop rewriting.
 
+The existing =starintel-visual.prompt= is also mirrored into this repository so
+activating the external library does not remove the current image-template
+workflow.  The dotfiles copy remains the offline fallback.
+
 See =docs/ADARD.org= for the architecture decision and rejected alternatives.
 
 * Emacs
