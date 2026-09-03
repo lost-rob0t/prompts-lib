@@ -1,0 +1,19 @@
+#+title: prompts-lib
+#+description: Versioned reusable prompt library shared by Emacs and other LLM clients.
+
+* Purpose
+
+This repository is the durable source of truth for reusable user prompts.
+Clients render and execute prompts; they do not own prompt content.
+
+Prompt bodies live in =prompts/*.prompt=.  =catalog.json= adds stable IDs,
+titles, descriptions, tags, and aliases without putting client-specific
+metadata into the prompt text itself.
+
+Field syntax is deliberately small:
+
+- ={{NAME}}= — required value
+- ={{NAME|default value}}= — value with a default
+
+The initial Emacs client lives in the dotfiles repository under
+=lisp/llm/prompt-lib.*=.
