@@ -1,0 +1,15 @@
+Compile the current work into a prompt for a fresh coding agent.
+
+Target repository: {{REPO}}
+Objective: {{OBJECTIVE}}
+
+The prompt must be self-contained and include:
+- current verified state and exact relevant identities/paths;
+- the bounded task to perform;
+- repository instructions and architectural invariants that matter;
+- files/components to inspect first;
+- required tests/verification;
+- explicit forbidden actions such as merges or unrelated refactors;
+- concrete done criteria.
+
+Remove conversational history, speculation, duplicated instructions, and motivational filler. Preserve exact technical names and constraints. Do not perform the implementation; output only the compiled handoff prompt.
