@@ -1,0 +1,7 @@
+Review documentation in {{REPO}} against the current runtime/source implementation.
+
+Treat executable source and verified runtime behavior as authoritative when docs are stale. Find contradictory endpoint names, commands, schemas, paths, defaults, examples, or architectural claims.
+
+Update only the stale documentation and any generated counterpart required by repository instructions. Preserve exact API/module/path names from source. Do not invent compatibility behavior to make old docs look correct.
+
+Run the repository's relevant doc/literate parity checks and report every corrected drift point with its source evidence.
