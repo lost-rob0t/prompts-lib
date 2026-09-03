@@ -1,0 +1,17 @@
+Work in {{REPO}}.
+
+Implement this bounded task:
+{{TASK}}
+
+First inspect the current source, tests, repository instructions, branch/head, and relevant open work. Preserve existing architecture unless the task requires a change.
+
+Constraints:
+- Follow repository-local instructions exactly.
+- Prefer the smallest canonical implementation; remove dead or redundant code encountered in scope.
+- Write or update regression tests before implementation when practical.
+- Run the real local verification suite for the touched behavior.
+- Treat exact-head test output and source as stronger evidence than prose claims.
+- Do not merge unless explicitly authorized.
+{{EXTRA_CONSTRAINTS|}}
+
+Return only: what changed, exact files, verification evidence, remaining blocker/risk, and the next bounded action if anything remains.
