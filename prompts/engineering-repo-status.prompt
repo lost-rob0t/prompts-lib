@@ -1,0 +1,7 @@
+Inspect {{REPO}} and give me the current engineering status only. Do not modify files, create branches, merge, or start implementation.
+
+Check the current branch/head, recent relevant commits, open PRs/issues, test/CI state, known blockers, and the nearest unfinished core task.
+
+Distinguish verified state from worker claims. Use exact commit/test evidence where available.
+
+Return a compact status with: current head, what is actually done, what is still broken or unverified, and the single best next task.
