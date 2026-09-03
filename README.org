@@ -1,19 +1,65 @@
 #+title: prompts-lib
-#+description: Versioned reusable prompt library shared by Emacs and other LLM clients.
+#+description: Org-first reusable prompt library shared by Emacs and other LLM clients.
 
 * Purpose
 
 This repository is the durable source of truth for reusable user prompts.
 Clients render and execute prompts; they do not own prompt content.
 
-Prompt bodies live in =prompts/*.prompt=.  =catalog.json= adds stable IDs,
-titles, descriptions, tags, and aliases without putting client-specific
-metadata into the prompt text itself.
+The library is deliberately file-native.  There is no JSON catalog or prompt
+database.  Metadata and prompt text live together in files that remain useful
+outside any client.
 
-Field syntax is deliberately small:
+* Formats
+
+Org is the default and canonical format.
+
+A normal prompt looks like:
+
+#+begin_src org
+#+title: Implement bounded slice
+#+prompt_id: engineering.implement-slice
+#+description: Inspect first, implement narrowly, verify exact head.
+#+filetags: :engineering:implementation:tdd:git:
+#+prompt_aliases: implement | coding task | bounded slice
+
+* Prompt
+Work in {{REPO}}.
+...
+#+end_src
+
+Prompt fields use:
 
 - ={{NAME}}= — required value
 - ={{NAME|default value}}= — value with a default
 
-The initial Emacs client lives in the dotfiles repository under
-=lisp/llm/prompt-lib.*=.
+Clients should also support Markdown and declarative Lisp records when useful,
+but new prompts default to Org.  Format adapters must project into the same
+logical record: ID, title, description, tags, aliases, and prompt body.
+
+* Initial prompts
+
+The initial Org library captures recurring engineering, research, symbolic
+verification, writing, and StarIntel visual workflows.  Files are individually
+addressable and can be linked from other Org documents with normal =file:=
+links.
+
+See =docs/ADARD.org= for the architecture decision.
+
+* Emacs
+
+The Emacs client lives in the dotfiles repository under
+=lisp/llm/prompt-lib.el=.
+
+Its default checkout path is:
+
+#+begin_example
+~/Documents/Projects/prompts-lib
+#+end_example
+
+Override that with =PROMPTS_LIB_DIR=.  Once the checkout exists, =SPC y p=
+opens the prompt-library Transient.  Prompts can be browsed, previewed, copied,
+inserted, edited, or sent through gptel.
+
+New prompts should open in Org mode by default.  Markdown and Lisp are explicit
+alternate formats rather than separate libraries.

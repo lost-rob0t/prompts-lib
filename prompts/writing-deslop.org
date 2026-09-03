@@ -1,0 +1,14 @@
+#+title: De-slop rewrite
+#+prompt_id: writing.deslop
+#+description: Rewrite technical prose directly while preserving constraints and exact names.
+#+filetags: :writing:rewrite:concise:deslop:
+#+prompt_aliases: deslop | rewrite in my style | make concise
+
+* Prompt
+Rewrite the following text to be concise, technical, and natural:
+
+{{TEXT}}
+
+Preserve the meaning, exact technical names, constraints, and important qualifiers. Remove repetition, filler, fake certainty, marketing language, generic AI phrasing, needless headings, and explanatory padding. Prefer direct sentences and concrete verbs.
+
+Do not introduce new claims or soften hard constraints. Return only the rewritten text.

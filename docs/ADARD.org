@@ -1,0 +1,73 @@
+#+title: prompts-lib v0 ADARD
+#+status: RESOLVED-DEVELOPED
+
+* Analyze
+
+The repository began empty.  Dotfiles already had reusable prompt rendering and
+Emacs LLM integration.  The missing layer was durable cross-client ownership,
+metadata/search, and a better Emacs library surface.
+
+The first JSON-catalog design worked mechanically but duplicated metadata away
+from the prompt and was not idiomatic for an Emacs/Org-centered workflow.
+
+* Design
+
+- =prompts-lib= owns reusable prompt content.
+- Org files are the default and canonical prompt/config format.
+- Metadata is colocated with the prompt through Org keywords and =#+filetags:=.
+- The renderable body lives below a top-level =* Prompt= heading.
+- Placeholder syntax stays ={{NAME}}= / ={{NAME|default}}=.
+- Markdown and declarative Lisp are alternate adapters into the same logical
+  prompt record; they are not alternate sources of truth for the same prompt.
+- New prompts created by Emacs default to =.org= and open in =org-mode=.
+- The library is discovered from files.  There is no required central catalog.
+
+* Adversarial review
+
+Rejected designs:
+
+- JSON catalog plus separate prompt bodies: duplicates metadata and makes Org a
+  second-class editor rather than the native data model.
+- Emacs Lisp as the only prompt database: blocks non-Emacs clients.
+- YAML/TOML as mandatory metadata: unnecessary parser/dependency for the
+  default workflow.
+- Automatic Git/network synchronization on prompt access: surprising external
+  effects and unrelated to rendering.
+- Prompt daemon/database: unnecessary mutable authority for version-controlled
+  text.
+
+Required defenses:
+
+- File discovery stays under the configured library root.
+- Parsing must not evaluate arbitrary Lisp just to read declarative prompt
+  records.
+- Rendering remains local and deterministic before an explicit send action.
+- Git merge/publish is never implicit.
+
+* Resolve
+
+APPROVE the Org-first file-native design.
+
+Org owns the default authoring experience.  Markdown and Lisp exist as format
+adapters for portability and programmable configuration, while all clients see
+the same logical prompt fields.
+
+* Develop
+
+The initial reusable prompts are stored as individual Org files.  The Emacs
+client is being updated to discover and parse Org by default and support
+Markdown/Lisp adapters.  No PR is merged by this artifact.
+
+* Verify
+
+Required v0 verification:
+
+- Org metadata and =* Prompt= bodies parse deterministically.
+- Default creation produces an Org file and opens it in Org mode.
+- Discovery is confined to the configured library root.
+- Markdown and Lisp adapters normalize into the same record shape.
+- Existing ={{...}}= rendering remains compatible.
+- The StarIntel visual prompt remains available after external-library
+  activation.
+
+Full ERT execution remains a local Emacs gate before merge.

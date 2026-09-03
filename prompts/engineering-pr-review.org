@@ -1,0 +1,14 @@
+#+title: Independent PR review
+#+prompt_id: engineering.pr-review
+#+description: Review a complete PR against source, tests, repository rules, and exact-head evidence.
+#+filetags: :engineering:review:pull-request:verification:
+#+prompt_aliases: review pr | check pr
+
+* Prompt
+Review PR {{PR}} in {{REPO}} against the current base branch and repository instructions.
+
+Inspect the complete diff, touched tests, relevant source outside the diff, review threads, and exact-head CI/test state.
+
+Look specifically for behavioral regressions, stale assumptions, missing failure semantics, authority/security boundary changes, duplicated code paths, generated/literate drift, and claims not supported by tests or source.
+
+Classify findings by severity and cite exact files/lines. If there are no blocking findings, say what was independently verified and what remains unverified. Do not merge unless explicitly asked.

@@ -1,0 +1,26 @@
+#+title: ADARD run
+#+prompt_id: research.adard
+#+description: Run analyze, design, adversarial review, resolve, develop, and verify with bounded RAGE escalation.
+#+filetags: :research:design:adard:rage:verification:
+#+prompt_aliases: adard | run adard | design review
+
+* Prompt
+Run ADARD against {{TARGET}} for this objective:
+{{OBJECTIVE}}
+
+Canonical phases:
+analyze -> design -> adversarial_review -> resolve -> develop -> verify
+
+Rules:
+- Start each phase from explicit artifacts/evidence rather than hidden prior reasoning.
+- Analysis identifies current state, constraints, evidence gaps, and the bounded problem.
+- Design proposes the smallest coherent architecture and explicit invariants.
+- Adversarial review tries to break the design: conflicting requirements, authority leaks, stale assumptions, missing failure semantics, and unnecessary complexity.
+- Resolve binds the exact analysis/design/review and chooses approve, revise, or block with reasons.
+- Develop happens only after an approve decision. Keep implementation bounded and TDD-first.
+- Verify binds to the exact implementation identity and independent evidence.
+- Classify verification failures before recursion. Use RAGE only for architectural/design failure, with an explicit budget and stop condition.
+- Do not merge or publish irreversible effects unless explicitly authorized.
+{{EXTRA_CONSTRAINTS|}}
+
+Return durable phase artifacts plus the final resolved decision and verification state.
