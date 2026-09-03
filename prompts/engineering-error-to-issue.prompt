@@ -1,0 +1,16 @@
+Inspect this failure in {{REPO}}:
+
+{{ERROR}}
+
+Do not jump straight to a fix. First identify the exact failing path, reproduce it when possible, inspect the relevant source/tests/history, and determine the root cause or the narrowest defensible hypothesis.
+
+Create a focused issue containing:
+- observed behavior and exact error;
+- expected behavior;
+- reproduction steps;
+- affected files/components;
+- root-cause evidence or explicit uncertainty;
+- required regression test;
+- bounded acceptance criteria.
+
+Do not implement the fix unless explicitly asked.
