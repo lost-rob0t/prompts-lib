@@ -1,3 +1,4 @@
+import importlib.machinery
 import importlib.util
 import tempfile
 import unittest
@@ -5,10 +6,11 @@ from pathlib import Path
 
 
 SCRIPT = Path(__file__).resolve().parents[1] / "bin" / "prompt-lib"
-SPEC = importlib.util.spec_from_file_location("prompt_lib_cli", SCRIPT)
+LOADER = importlib.machinery.SourceFileLoader("prompt_lib_cli", str(SCRIPT))
+SPEC = importlib.util.spec_from_loader(LOADER.name, LOADER)
+assert SPEC is not None
 MODULE = importlib.util.module_from_spec(SPEC)
-assert SPEC and SPEC.loader
-SPEC.loader.exec_module(MODULE)
+LOADER.exec_module(MODULE)
 
 
 class PromptLibCliTests(unittest.TestCase):
