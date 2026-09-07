@@ -44,7 +44,32 @@ verification, writing, and StarIntel visual workflows.  Files are individually
 addressable and can be linked from other Org documents with normal =file:=
 links.
 
+=engineering.state-machine-worker= captures the evidence-driven continuous
+worker pattern: each loop persists =WORKER_STATE= and chooses the next
+=RESEARCH=, =IMPLEMENT=, or =REVIEW= mode from the evidence produced by the
+previous pass.
+
 See =docs/ADARD.org= for the architecture decision.
+
+* CLI
+
+The small file-native CLI provides non-Emacs list/show/copy access to canonical
+Org prompts:
+
+#+begin_src sh
+python3 bin/prompt-lib list
+python3 bin/prompt-lib show engineering.state-machine-worker
+python3 bin/prompt-lib cp engineering.state-machine-worker
+python3 bin/prompt-lib cp engineering.state-machine-worker --set REPO=lost-rob0t/zara
+#+end_src
+
+=cp= copies to the system clipboard using =wl-copy=, =xclip=, or =xsel=, in
+that order.  Supplied =--set NAME=VALUE= values and prompt defaults are rendered
+before copy; unresolved required placeholders remain visible rather than being
+silently invented.
+
+Set =PROMPTS_LIB_DIR= when the command is installed somewhere other than the
+repository checkout.
 
 * Emacs
 
@@ -60,6 +85,10 @@ Its default checkout path is:
 Override that with =PROMPTS_LIB_DIR=.  Once the checkout exists, =SPC y p=
 opens the prompt-library Transient.  Prompts can be browsed, previewed, copied,
 inserted, edited, or sent through gptel.
+
+The Qtile integration can also open the Emacs prompt browser directly through
+=Super e y p=.  In the browser, =c= copies the rendered prompt to the kill ring
+and system clipboard.
 
 New prompts should open in Org mode by default.  Markdown and Lisp are explicit
 alternate formats rather than separate libraries.
