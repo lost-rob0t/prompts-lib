@@ -1,5 +1,6 @@
 import importlib.machinery
 import importlib.util
+import sys
 import tempfile
 import unittest
 from pathlib import Path
@@ -10,6 +11,7 @@ LOADER = importlib.machinery.SourceFileLoader("prompt_lib_cli", str(SCRIPT))
 SPEC = importlib.util.spec_from_loader(LOADER.name, LOADER)
 assert SPEC is not None
 MODULE = importlib.util.module_from_spec(SPEC)
+sys.modules[LOADER.name] = MODULE
 LOADER.exec_module(MODULE)
 
 
