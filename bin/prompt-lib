@@ -1,0 +1,147 @@
+#!/usr/bin/env python3
+"""Small file-native CLI for the canonical Org prompt library."""
+
+from __future__ import annotations
+
+import argparse
+import os
+import re
+import shutil
+import subprocess
+import sys
+from dataclasses import dataclass
+from pathlib import Path
+
+FIELD_RE = re.compile(r"{{([A-Za-z0-9_.-]+)(?:\|([^}\n]*))?}}")
+KEYWORD_RE = re.compile(r"^#\+([A-Za-z0-9_]+):[ \t]*(.*)$", re.IGNORECASE)
+
+
+@dataclass(frozen=True)
+class Prompt:
+    prompt_id: str
+    title: str
+    path: Path
+    body: str
+
+
+def library_root() -> Path:
+    configured = os.environ.get("PROMPTS_LIB_DIR")
+    if configured:
+        return Path(configured).expanduser().resolve()
+    return Path(__file__).resolve().parents[1]
+
+
+def parse_org(path: Path) -> Prompt:
+    metadata: dict[str, str] = {}
+    lines = path.read_text(encoding="utf-8").splitlines()
+    for line in lines:
+        match = KEYWORD_RE.match(line)
+        if match:
+            metadata[match.group(1).lower()] = match.group(2).strip()
+
+    try:
+        start = next(i for i, line in enumerate(lines) if line.strip() == "* Prompt") + 1
+    except StopIteration as exc:
+        raise ValueError(f"missing top-level '* Prompt' heading: {path}") from exc
+
+    end = len(lines)
+    for index in range(start, len(lines)):
+        line = lines[index]
+        if line.startswith("* "):
+            end = index
+            break
+
+    body = "\n".join(lines[start:end]).strip()
+    prompt_id = metadata.get("prompt_id", path.stem)
+    title = metadata.get("title", path.stem.replace("-", " ").title())
+    return Prompt(prompt_id=prompt_id, title=title, path=path, body=body)
+
+
+def prompts() -> list[Prompt]:
+    prompt_dir = library_root() / "prompts"
+    if not prompt_dir.is_dir():
+        raise SystemExit(f"prompt directory does not exist: {prompt_dir}")
+    result = [parse_org(path) for path in sorted(prompt_dir.rglob("*.org"))]
+    return result
+
+
+def select_prompt(name: str) -> Prompt:
+    candidates = prompts()
+    for prompt in candidates:
+        if name in {prompt.prompt_id, prompt.path.stem, prompt.title}:
+            return prompt
+    raise SystemExit(f"unknown prompt: {name}")
+
+
+def parse_values(items: list[str]) -> dict[str, str]:
+    values: dict[str, str] = {}
+    for item in items:
+        if "=" not in item:
+            raise SystemExit(f"--set requires NAME=VALUE, got: {item}")
+        name, value = item.split("=", 1)
+        if not name:
+            raise SystemExit("--set name cannot be empty")
+        values[name] = value
+    return values
+
+
+def render(body: str, values: dict[str, str]) -> str:
+    def replace(match: re.Match[str]) -> str:
+        name = match.group(1)
+        default = match.group(2)
+        if name in values:
+            return values[name]
+        if default is not None:
+            return default
+        return match.group(0)
+
+    return FIELD_RE.sub(replace, body)
+
+
+def copy_to_clipboard(text: str) -> None:
+    if shutil.which("wl-copy"):
+        command = ["wl-copy"]
+    elif shutil.which("xclip"):
+        command = ["xclip", "-selection", "clipboard"]
+    elif shutil.which("xsel"):
+        command = ["xsel", "--clipboard", "--input"]
+    else:
+        raise SystemExit("no clipboard helper found; install wl-copy, xclip, or xsel")
+    subprocess.run(command, input=text, text=True, check=True)
+
+
+def build_parser() -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser(prog="prompt-lib")
+    subparsers = parser.add_subparsers(dest="command", required=True)
+
+    subparsers.add_parser("list", help="list prompt ids and titles")
+
+    for command in ("show", "cp"):
+        sub = subparsers.add_parser(command)
+        sub.add_argument("prompt")
+        sub.add_argument("--set", action="append", default=[], metavar="NAME=VALUE")
+
+    return parser
+
+
+def main(argv: list[str] | None = None) -> int:
+    args = build_parser().parse_args(argv)
+    if args.command == "list":
+        for prompt in prompts():
+            print(f"{prompt.prompt_id}\t{prompt.title}")
+        return 0
+
+    prompt = select_prompt(args.prompt)
+    rendered = render(prompt.body, parse_values(args.set))
+    if args.command == "show":
+        print(rendered)
+        return 0
+    if args.command == "cp":
+        copy_to_clipboard(rendered)
+        print(f"copied {prompt.prompt_id} ({len(rendered)} chars)", file=sys.stderr)
+        return 0
+    raise AssertionError(args.command)
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
